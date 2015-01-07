@@ -1,6 +1,7 @@
 {
   'variables': {
     'v8_use_snapshot%': 'true',
+    'node_use_lttng%': 'true',
     'node_use_dtrace%': 'false',
     'node_use_etw%': 'false',
     'node_use_perfctr%': 'false',
@@ -265,6 +266,15 @@
           'include_dirs': [ '<(SHARED_INTERMEDIATE_DIR)' ],
           'sources': [
             'src/node_mdb.cc',
+          ],
+        } ],
+        [ 'node_use_lttng=="true"', {
+          'defines': [ 'HAVE_LTTNG=1' ],
+          'include_dirs': [ '<(SHARED_INTERMEDIATE_DIR)' ],
+          'libraries': [ '-llttng-ust' ],
+          'sources': [
+            'src/node_lttng.cc',
+            'src/node_lttng_tp.c'
           ],
         } ],
         [ 'node_use_etw=="true"', {
